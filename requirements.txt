@@ -1,0 +1,3 @@
+python-dotenv
+websockets
+websockets_proxy
