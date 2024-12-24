@@ -81,8 +81,8 @@ async def relay_handler(client_ws, path):
 
 async def main():
     """Starts the WebSocket relay server."""
-    server = await websockets.serve(relay_handler, "0.0.0.0", 8080)
-    print("WebSocket relay server started on ws://localhost:8080")
+    server = await websockets.serve(relay_handler, "0.0.0.0", 4001)
+    print("WebSocket relay server started on ws://localhost:4001")
     await server.wait_closed()
 
 if __name__ == "__main__":
