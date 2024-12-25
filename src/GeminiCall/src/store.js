@@ -31,8 +31,7 @@ const useCallStore = create((set, get) => ({
   setIsConnected: (connected) => set({ isConnected: connected }),
   setIsScreenOn: (on) => set({ isScreenOn: on }),
   setCallDuration: (duration) => set({ callDuration: duration }),
-  setVolume: (volume) => set({ volume }),
-  setInVolume: (volume) => set({ inVolume: volume }),
+  setVolume: (volume) => set({ liveAPIVolume: volume }), // 设置liveAPIVolume
   setVideoRef: (ref) => set({ videoRef: ref }),
   setRenderCanvasRef: (ref) => set({ renderCanvasRef: ref }),
   setLiveAPIState: (state) => {
@@ -133,7 +132,7 @@ const useCallStore = create((set, get) => ({
             },
           ]);
         })
-        .on('volume', get().setInVolume)
+        .on('volume', get().setVolume)
         .start();
     }
   },

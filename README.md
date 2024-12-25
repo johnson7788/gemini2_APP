@@ -57,6 +57,9 @@ Run the production version
 npm run start
 ```
 
+## 访问
+http://localhost:8084/geminicall
+
 ## Example Screenshots
 
 ### Share Screen
