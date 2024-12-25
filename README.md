@@ -78,3 +78,7 @@ http://localhost:8084/geminicall
 ![Voice1](./example/Voice1.png)
 ![Voice2](./example/Voice2.png)
 
+
+### Notice
+Gemini2.0 quota limit error when try to connect many times in 1 minitue.
+Connection closed: received 1011 (unexpected error) Request trace id: c60a47f81f97bfe2, Quota exceeded for quota metric 'Bidi generate content active sessions' and limit 'Bidi; then sent 1011 (unexpected error) Request trace id: c60a47f81f97bfe2, Quota exceeded for quota metric 'Bidi generate content active sessions' and limit 'Bidi
