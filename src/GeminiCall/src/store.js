@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { AudioRecorder } from './lib/audio-recorder';
+import { message } from 'antd';
 
 const useCallStore = create((set, get) => ({
   // 状态和方法初始化
@@ -57,6 +58,14 @@ const useCallStore = create((set, get) => ({
       set({ isConnected: true, liveAPIClient: LiveAPIState.client });
     } catch (error) {
       console.error('连接失败:', error);
+      // 显示错误提示
+      message.error({
+        content: "连接失败，当前由于访问用户较多，Quota不够了，请稍后再试," + error,
+        duration: 3,
+        style: {
+          marginTop: '20vh',
+        },
+      });
       set({ isConnected: false });
     }
   },
@@ -84,6 +93,10 @@ const useCallStore = create((set, get) => ({
   handleConnect: async (mode) => {
     const store = get();
     await store.connect();
+    if (!store.isConnected) {
+      // 如果连接失败，则不启动定时器和后面的操作了
+      return;
+    }
     store.startTimer(); // 启动定时器
     if (mode === 'voice') {
       store.startAudioRecording();
