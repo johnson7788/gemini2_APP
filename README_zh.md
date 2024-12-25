@@ -2,6 +2,8 @@
 
 一个基于React和Gemini2.0的实时视频通话应用,支持语音通话、视频通话和屏幕共享等功能。
 
+[Watch Video](https://www.bilibili.com/video/BV1owCcYkEgx/)
+
 ## 功能特点
 
 - 💬 语音通话

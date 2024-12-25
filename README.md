@@ -1,7 +1,11 @@
 # Gemini 2.0 Call Video Communication App
 A real-time video communication app based on React and Gemini 2.0, supporting features such as voice calls, video calls, and screen sharing.
 
+
 中文README[README_zh.md](README_zh.md)
+
+[Watch Video](https://www.bilibili.com/video/BV1owCcYkEgx/)
+
 
 ## Features
 
