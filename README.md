@@ -16,6 +16,7 @@ A real-time video communication app based on React and Gemini 2.0, supporting fe
 - 📊 Call Data Statistics
 - 🔄 Real-Time State Synchronization
 - 🎛️ Device Control (Microphone/Camera)
+- toggle front or backend Camera
 
 ## Requirements
 
