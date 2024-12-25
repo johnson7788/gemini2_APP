@@ -20,6 +20,7 @@ import { UseMediaStreamResult } from "./use-media-stream-mux";
 export function useWebcam(): UseMediaStreamResult {
   const [stream, setStream] = useState<MediaStream | null>(null);
   const [isStreaming, setIsStreaming] = useState(false);
+  const [facingMode, setFacingMode] = useState<"user" | "environment">("environment");
 
   useEffect(() => {
     const handleStreamEnded = () => {
@@ -34,19 +35,24 @@ export function useWebcam(): UseMediaStreamResult {
         stream
           .getTracks()
           .forEach((track) =>
-            track.removeEventListener("ended", handleStreamEnded),
+            track.removeEventListener("ended", handleStreamEnded)
           );
       };
     }
   }, [stream]);
 
   const start = async () => {
-    const mediaStream = await navigator.mediaDevices.getUserMedia({
-      video: true,
-    });
-    setStream(mediaStream);
-    setIsStreaming(true);
-    return mediaStream;
+    try {
+      const mediaStream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode }, // 动态设置摄像头方向
+      });
+      setStream(mediaStream);
+      setIsStreaming(true);
+      return mediaStream;
+    } catch (error) {
+      console.error("Error accessing webcam:", error);
+      throw error;
+    }
   };
 
   const stop = () => {
@@ -57,13 +63,25 @@ export function useWebcam(): UseMediaStreamResult {
     }
   };
 
+  const toggleCamera = async () => {
+    if (isStreaming) {
+      stop();
+    }
+    // 切换摄像头方向
+    setFacingMode((prevMode) => (prevMode === "user" ? "environment" : "user"));
+    await start(); // 重新启动摄像头流
+  };
+
   const result: UseMediaStreamResult = {
     type: "webcam",
     start,
     stop,
     isStreaming,
     stream,
+    toggleCamera, // 新增的切换摄像头功能
+    facingMode,   // 可供外部访问当前的摄像头方向
   };
 
   return result;
 }
+

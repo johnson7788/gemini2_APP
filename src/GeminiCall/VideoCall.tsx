@@ -151,6 +151,12 @@ const VideoCall: React.FC = () => {
               >
                 <i className={`fas ${isVideoOn ? 'fa-video' : 'fa-video-slash'} text-gray-700`}></i>
               </button>
+              <button
+                onClick={() => webcam.toggleCamera?.()}
+                className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center !rounded-button"
+              >
+                <i className="fas fa-sync text-gray-700"></i>
+              </button>
               <button 
                 onClick={() =>handleVideoDisconnect()}
                 className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center !rounded-button">
@@ -166,6 +172,12 @@ const VideoCall: React.FC = () => {
             </button>
           )}
         </div>
+        {/* 显示当前摄像头方向 */}
+        {isVideoOn && webcam.facingMode && (
+          <div className="mt-4 text-center text-sm text-gray-600">
+            当前摄像头: {webcam.facingMode === "user" ? "前置" : "后置"}
+          </div>
+        )}
       </div>
     </>
   );

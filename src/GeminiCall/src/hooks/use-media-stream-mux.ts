@@ -15,9 +15,11 @@
  */
 
 export type UseMediaStreamResult = {
-  type: "webcam" | "screen";
-  start: () => Promise<MediaStream>;
-  stop: () => void;
-  isStreaming: boolean;
-  stream: MediaStream | null;
+  type: "webcam" | "screen"; // 流类型：摄像头或屏幕共享
+  start: () => Promise<MediaStream>; // 启动流
+  stop: () => void; // 停止流
+  isStreaming: boolean; // 是否正在流式传输
+  stream: MediaStream | null; // 当前的媒体流
+  toggleCamera?: () => Promise<void>; // 切换摄像头方向（仅在 "webcam" 类型时可用）
+  facingMode?: "user" | "environment"; // 当前摄像头方向（仅在 "webcam" 类型时可用）
 };
