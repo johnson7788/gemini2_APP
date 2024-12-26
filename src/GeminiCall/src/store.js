@@ -93,7 +93,8 @@ const useCallStore = create((set, get) => ({
   handleConnect: async (mode) => {
     const store = get();
     await store.connect();
-    if (!store.isConnected) {
+    const isConnected = get().isConnected; // 确保读取最新状态
+    if (!isConnected) {
       // 如果连接失败，则不启动定时器和后面的操作了
       return;
     }
