@@ -14,6 +14,8 @@ import dotenv
 from websockets_proxy import Proxy, proxy_connect
 
 PROXY_URL = "http://127.0.0.1:7890"
+USE_PROXY = os.getenv("USE_PROXY", "True") == "True"
+print(f"是否使用PROXY: {USE_PROXY}, PROXY_URL: {PROXY_URL}")
 # PROXY_URL = ""
 DEBUG = True
 # 配置logging
@@ -41,7 +43,7 @@ async def relay_handler(client_ws, path):
     """Handles the WebSocket connection with the client."""
     try:
         # Connect to Gemini WebSocket
-        if PROXY_URL:
+        if USE_PROXY:
             proxy = Proxy.from_url(PROXY_URL)
             async with proxy_connect(GEMINI_WS_URL, proxy=proxy) as gemini_ws:
                 # Task for relaying messages from Gemini to the client

@@ -74,3 +74,6 @@ npm run start
 语音通话
 ![Voice1](./example/Voice1.png)
 ![Voice2](./example/Voice2.png)
+
+## 故障
+websocket一定要websockets==12.0,否则报错path找不到
