@@ -13,9 +13,6 @@ import logging
 import dotenv
 from websockets_proxy import Proxy, proxy_connect
 
-PROXY_URL = "http://127.0.0.1:7890"
-USE_PROXY = os.getenv("USE_PROXY", "True") == "True"
-print(f"是否使用PROXY: {USE_PROXY}, PROXY_URL: {PROXY_URL}")
 # PROXY_URL = ""
 DEBUG = True
 # 配置logging
@@ -35,46 +32,31 @@ logging.info(f"API_KEY: {API_KEY}")
 assert API_KEY, "需要设置环境变量 REACT_APP_GEMINI_API_KEY in .env"
 
 # Gemini WebSocket API URL
-GEMINI_WS_URL = f"wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1alpha.GenerativeService.BidiGenerateContent"
-GEMINI_WS_URL += f"?key={API_KEY}"
+GLM_WS_URL = f"wss://open.bigmodel.cn/api/paas/v4/realtime"
 
 
 async def relay_handler(client_ws, path):
     """Handles the WebSocket connection with the client."""
+    headers = {
+        'Authorization': "Bearer " + API_KEY
+    }
     try:
         # Connect to Gemini WebSocket
-        if USE_PROXY:
-            proxy = Proxy.from_url(PROXY_URL)
-            async with proxy_connect(GEMINI_WS_URL, proxy=proxy) as gemini_ws:
-                # Task for relaying messages from Gemini to the client
-                async def gemini_to_client():
-                    async for message in gemini_ws:
-                        logger.info(f"Received from Gemini: {message}")
-                        await client_ws.send(message)
+        async with websockets.connect(GLM_WS_URL, extra_headers=headers) as gemini_ws:
+            # Task for relaying messages from Gemini to the client
+            async def gemini_to_client():
+                async for message in gemini_ws:
+                    logger.info(f"Received from Gemini: {message}")
+                    await client_ws.send(message)
 
-                # Task for relaying messages from the client to Gemini
-                async def client_to_gemini():
-                    async for message in client_ws:
-                        logger.info(f"Received from client: {message}")
-                        await gemini_ws.send(message)
-                # Run both tasks concurrently
-                await asyncio.gather(gemini_to_client(), client_to_gemini())
-        else:
-            async with websockets.connect(GEMINI_WS_URL) as gemini_ws:
-                # Task for relaying messages from Gemini to the client
-                async def gemini_to_client():
-                    async for message in gemini_ws:
-                        logger.info(f"Received from Gemini: {message}")
-                        await client_ws.send(message)
+            # Task for relaying messages from the client to Gemini
+            async def client_to_gemini():
+                async for message in client_ws:
+                    logger.info(f"Received from client: {message}")
+                    await gemini_ws.send(message)
 
-                # Task for relaying messages from the client to Gemini
-                async def client_to_gemini():
-                    async for message in client_ws:
-                        logger.info(f"Received from client: {message}")
-                        await gemini_ws.send(message)
-
-                # Run both tasks concurrently
-                await asyncio.gather(gemini_to_client(), client_to_gemini())
+            # Run both tasks concurrently
+            await asyncio.gather(gemini_to_client(), client_to_gemini())
 
     except websockets.exceptions.ConnectionClosed as e:
         print(f"Connection closed: {e}")
