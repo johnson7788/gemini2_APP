@@ -31,7 +31,7 @@ export function useLiveAPI({
 
   const [connected, setConnected] = useState(false);
   const [config, setConfig] = useState<LiveConfig>({
-    model: "models/gemini-2.0-flash-exp",
+    model: "glm-4-realtime",
   });
   const [volume, setVolume] = useState(0);
 

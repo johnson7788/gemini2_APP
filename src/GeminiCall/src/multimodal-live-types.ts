@@ -35,21 +35,13 @@ import type {
  * the config to initiate the session
  */
 export type LiveConfig = {
-  model: string;
-  systemInstruction?: { parts: Part[] };
-  generationConfig?: Partial<LiveGenerationConfig>;
+  instructions?: { parts: Part[] };
+  turn_detection?: Partial<LiveTurnDetectionConfig>;
   tools?: Array<Tool | { googleSearch: {} } | { codeExecution: {} }>;
 };
 
-export type LiveGenerationConfig = GenerationConfig & {
-  responseModalities: "text" | "audio" | "image";
-  speechConfig?: {
-    voiceConfig?: {
-      prebuiltVoiceConfig?: {
-        voiceName: "Puck" | "Charon" | "Kore" | "Fenrir" | "Aoede" | string;
-      };
-    };
-  };
+export type LiveTurnDetectionConfig = GenerationConfig & {
+  type: string;
 };
 
 export type LiveOutgoingMessage =
