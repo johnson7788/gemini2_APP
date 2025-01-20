@@ -27,9 +27,9 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 dotenv.load_dotenv()
-API_KEY = os.getenv("REACT_APP_GEMINI_API_KEY")
+API_KEY = os.getenv("REACT_APP_GLM_API_KEY")
 logging.info(f"API_KEY: {API_KEY}")
-assert API_KEY, "需要设置环境变量 REACT_APP_GEMINI_API_KEY in .env"
+assert API_KEY, "需要设置环境变量 REACT_APP_GLM_API_KEY in .env"
 
 # Gemini WebSocket API URL
 GLM_WS_URL = f"wss://open.bigmodel.cn/api/paas/v4/realtime"
