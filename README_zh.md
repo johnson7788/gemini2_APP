@@ -1,6 +1,6 @@
-# Gemini2.0 Call 视频通话应用
+# Zhipu GLM Call 视频通话应用
 
-一个基于React和Gemini2.0的实时视频通话应用,支持语音通话、视频通话和屏幕共享等功能。
+一个基于React和GLM的实时视频通话应用,支持语音通话、视频通话和屏幕共享等功能。
 
 [Watch Video](https://www.bilibili.com/video/BV1owCcYkEgx/)
 
