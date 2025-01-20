@@ -11,7 +11,7 @@ import { set } from 'lodash';
 // 从环境变量中获取 Gemini API 密钥
 const API_KEY = process.env.REACT_APP_GEMINI_API_KEY as string;
 if (typeof API_KEY !== "string") {
-  throw new Error("set REACT_APP_GEMINI_APIK_KEY in .env");
+  throw new Error("set REACT_APP_GEMINI_API_KEY in .env");
 }
 const uri = process.env.REACT_APP_GEMINI_URI as string;
 if (!uri) {
